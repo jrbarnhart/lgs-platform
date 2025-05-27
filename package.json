@@ -1,0 +1,16 @@
+{
+  "name": "lgs-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:web": "pnpm --filter web dev",
+    "dev": "pnpm run dev:web",
+    "build": "pnpm recursive run build",
+    "test": "pnpm recursive run test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.8.1"
+}
