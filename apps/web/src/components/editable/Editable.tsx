@@ -1,8 +1,9 @@
 import { useEditingContext } from "../../contexts/Editing/useEditingContext";
+import type { SectionName } from "../../lib/types";
 
 type EditableProps = {
   loggedIn: boolean;
-  section: string;
+  section: SectionName;
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function Editable(props: EditableProps) {
