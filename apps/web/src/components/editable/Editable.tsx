@@ -1,24 +1,32 @@
-import { useState } from "react";
+import { useEditingContext } from "../../contexts/Editing/useEditingContext";
 
 type EditableProps = {
   loggedIn: boolean;
+  section: string;
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function Editable(props: EditableProps) {
-  const { children, loggedIn } = props;
-  const [editing, setEditing] = useState(false);
+  const { children, loggedIn, section } = props;
+
   const handleEditClick = () => {
-    setEditing((prev) => !prev);
+    setEditing((prev) => {
+      if (!prev.state) {
+        return { state: true, section };
+      }
+      return { state: false };
+    });
   };
+
+  const { editing, setEditing } = useEditingContext();
 
   return (
     <section>
       {loggedIn && (
         <button type="button" onClick={handleEditClick}>
-          {!editing ? "Edit" : "Stop Editing"}
+          {!editing.state ? "Edit" : "Stop Editing"}
         </button>
       )}
-      {editing && <p>Editing!</p>}
+      {editing.state && <p>Editing!</p>}
       {children}
     </section>
   );
