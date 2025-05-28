@@ -7,7 +7,7 @@ type NewsProps = {
 export default function News(props: NewsProps) {
   const { loggedIn } = props;
   return (
-    <Editable loggedIn={loggedIn}>
+    <Editable loggedIn={loggedIn} section="news">
       <h2>News</h2>
       <article>
         <h3>Grand Opening</h3>

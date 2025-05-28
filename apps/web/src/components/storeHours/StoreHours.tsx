@@ -7,7 +7,7 @@ type StoreHoursProps = {
 export default function StoreHours(props: StoreHoursProps) {
   const { loggedIn } = props;
   return (
-    <Editable loggedIn={loggedIn}>
+    <Editable loggedIn={loggedIn} section="hours">
       <h2>Hours:</h2>
       <p>M-F - 10am to Midnight</p>
       <p>Sat - Noon - 2am</p>
