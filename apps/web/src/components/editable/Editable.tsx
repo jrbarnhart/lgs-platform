@@ -26,7 +26,6 @@ export default function Editable(props: EditableProps) {
           {!editing.state ? "Edit" : "Stop Editing"}
         </button>
       )}
-      {editing.state && <p>Editing!</p>}
       {children}
     </section>
   );

@@ -2,6 +2,7 @@ import News from "./components/news/News";
 import Specials from "./components/specials/Specials";
 import StoreHours from "./components/storeHours/StoreHours";
 import { useAuthContext } from "./contexts/Auth/useAuthContext";
+import { useEditingContext } from "./contexts/Editing/useEditingContext";
 
 function App() {
   const { loggedIn, setLoggedIn } = useAuthContext();
@@ -14,8 +15,11 @@ function App() {
     window.location.reload();
   };
 
+  const { editing } = useEditingContext();
+
   return (
     <div>
+      {editing.state && <p>Editing: {editing.section || "Undefined"}</p>}
       <h1>Local Game Store</h1>
       <nav>
         <button type="button" onClick={handleLoginButton}>
