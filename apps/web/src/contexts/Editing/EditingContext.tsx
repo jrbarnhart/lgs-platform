@@ -1,10 +1,8 @@
 import { createContext, type SetStateAction } from "react";
 
-type EditableSectionNames = "hours" | "news" | "specials";
-
 export type EditingStateType = {
   state: boolean;
-  section?: EditableSectionNames;
+  section?: string;
 };
 
 export type EditingContextType = {
