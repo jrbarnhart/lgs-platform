@@ -28,9 +28,9 @@ function App() {
         )}
       </nav>
       <main>
-        <StoreHours />
-        <News />
-        <Specials />
+        <StoreHours loggedIn={loggedIn} />
+        <News loggedIn={loggedIn} />
+        <Specials loggedIn={loggedIn} />
       </main>
     </div>
   );
