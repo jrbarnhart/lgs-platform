@@ -13,7 +13,10 @@ export default function Editable(props: EditableProps) {
       if (!prev.state) {
         return { state: true, section };
       }
-      return { state: false };
+      if (prev.section === section) {
+        return { state: false };
+      }
+      return { state: true, section };
     });
   };
 
@@ -23,7 +26,9 @@ export default function Editable(props: EditableProps) {
     <section>
       {loggedIn && (
         <button type="button" onClick={handleEditClick}>
-          {!editing.state ? "Edit" : "Stop Editing"}
+          {editing.state && section === editing.section
+            ? "Stop Editing"
+            : "Edit"}
         </button>
       )}
       {children}
