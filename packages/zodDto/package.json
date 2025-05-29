@@ -1,0 +1,20 @@
+{
+  "name": "zod-dto",
+  "version": "0.1.0",
+  "description": "Shared Zod schemas and inferred types used as DTO's for web and server.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.8.1",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "zod": "^3.25.39"
+  }
+}
