@@ -16,5 +16,11 @@
   },
   "dependencies": {
     "zod": "^3.25.39"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   }
 }
