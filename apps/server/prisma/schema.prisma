@@ -14,14 +14,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model StoreHours {
+model StoreHour {
   id        Int      @unique @default(autoincrement())
   dayOfWeek Int // 0-6 Sunday-Saturday
-  openTime  String? // Ex: "10am" or "10:00" or null if closed
+  openTime  String? // Ex: "10am" or "10:00"
   closeTime String?
   isClosed  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SpecialStoreHour {
+  id          Int      @unique @default(autoincrement())
+  date        DateTime
+  description String?
+  openTime    String? // Ex: "10am" or "10:00"
+  closeTime   String?
+  isClosed    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model StoreEvent {
