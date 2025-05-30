@@ -15,7 +15,7 @@ import {
   createNewsUpdateDto,
   updateNewsUpdateDto,
 } from 'lgs-zod-dto';
-import { ZodValidationPipe } from 'src/zodValidation.pipe';
+import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
 
 @Controller('news-updates')
 export class NewsUpdatesController {
