@@ -11,7 +11,7 @@ export class NewsUpdatesService {
     try {
       return await this.prisma.newsUpdate.create({ data: createNewsUpdateDto });
     } catch (error) {
-      throw prismaError(error);
+      prismaError(error);
     }
   }
 
@@ -32,37 +32,21 @@ export class NewsUpdatesService {
   }
 
   async update(id: number, updateNewsUpdateDto: UpdateNewsUpdateDto) {
-    const recordToUpdate = await this.prisma.newsUpdate.findUnique({
-      where: { id },
-    });
-
-    if (!recordToUpdate) {
-      throw new NotFoundException('Record not found');
-    }
-
     try {
       return await this.prisma.newsUpdate.update({
         where: { id },
         data: updateNewsUpdateDto,
       });
     } catch (error) {
-      throw prismaError(error);
+      prismaError(error);
     }
   }
 
   async remove(id: number) {
-    const recordToDelete = await this.prisma.newsUpdate.findUnique({
-      where: { id },
-    });
-
-    if (!recordToDelete) {
-      throw new NotFoundException('Record not found');
-    }
-
     try {
       return await this.prisma.newsUpdate.delete({ where: { id } });
     } catch (error) {
-      throw prismaError(error);
+      prismaError(error);
     }
   }
 }
