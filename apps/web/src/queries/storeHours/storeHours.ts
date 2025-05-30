@@ -20,7 +20,7 @@ export async function fetchStoreHours() {
   }
 }
 
-export async function fetchMonsterById(id: string | number) {
+export async function fetchStoreHourById(id: string | number) {
   try {
     const storeHourQuery = await axiosClient.get<StoreHourEntity>(
       `/monsters/${id.toString()}`
