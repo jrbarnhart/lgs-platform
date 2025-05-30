@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAuthContext } from "../contexts/Auth/useAuthContext";
 import StoreHours from "../components/storeHours/StoreHours";
 import News from "../components/news/News";
 import Specials from "../components/specials/Specials";
@@ -10,16 +9,14 @@ export const Route = createFileRoute("/")({
 });
 
 function RouteComponent() {
-  const { loggedIn } = useAuthContext();
-
   return (
     <div>
       <h1>Local Game Store</h1>
 
       <main>
-        <StoreHours loggedIn={loggedIn} />
-        <News loggedIn={loggedIn} />
-        <Specials loggedIn={loggedIn} />
+        <StoreHours />
+        <News />
+        <Specials />
       </main>
       <EditUI />
     </div>

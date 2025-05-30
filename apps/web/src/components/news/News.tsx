@@ -1,13 +1,12 @@
+import { useAuthContext } from "../../contexts/Auth/useAuthContext";
 import Editable from "../editable/Editable";
 
-type NewsProps = {
-  loggedIn: boolean;
-} & React.HtmlHTMLAttributes<HTMLDivElement>;
+type NewsProps = React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function News(props: NewsProps) {
-  const { loggedIn } = props;
+  const { loggedIn } = useAuthContext();
   return (
-    <Editable loggedIn={loggedIn} section="news">
+    <Editable loggedIn={loggedIn} section="news" {...props}>
       <h2>News</h2>
       <article>
         <h3>Grand Opening</h3>
