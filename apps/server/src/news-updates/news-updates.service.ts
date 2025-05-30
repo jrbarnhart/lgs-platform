@@ -1,29 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateNewsUpdateDto, UpdateNewsUpdateDto } from 'lgs-zod-dto';
+import prismaError from 'src/validation/prismaError';
 
 @Injectable()
 export class NewsUpdatesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createNewsUpdateDto: CreateNewsUpdateDto) {
-    return 'This action adds a new newsUpdate';
+  async create(createNewsUpdateDto: CreateNewsUpdateDto) {
+    try {
+      return await this.prisma.newsUpdate.create({ data: createNewsUpdateDto });
+    } catch (error) {
+      throw prismaError(error);
+    }
   }
 
   async findAll() {
-    const updateCount = await this.prisma.newsUpdate.count();
-    return `This action returns all newsUpdates. Total: ${updateCount}`;
+    return this.prisma.newsUpdate.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} newsUpdate`;
+  async findOne(id: number) {
+    const foundRecord = await this.prisma.newsUpdate.findUnique({
+      where: { id },
+    });
+
+    if (!foundRecord) {
+      throw new NotFoundException('Record not found');
+    }
+
+    return foundRecord;
   }
 
-  update(id: number, updateNewsUpdateDto: UpdateNewsUpdateDto) {
-    return `This action updates a #${id} newsUpdate`;
+  async update(id: number, updateNewsUpdateDto: UpdateNewsUpdateDto) {
+    const recordToUpdate = await this.prisma.newsUpdate.findUnique({
+      where: { id },
+    });
+
+    if (!recordToUpdate) {
+      throw new NotFoundException('Record not found');
+    }
+
+    try {
+      return await this.prisma.newsUpdate.update({
+        where: { id },
+        data: updateNewsUpdateDto,
+      });
+    } catch (error) {
+      throw prismaError(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} newsUpdate`;
+  async remove(id: number) {
+    const recordToDelete = await this.prisma.newsUpdate.findUnique({
+      where: { id },
+    });
+
+    if (!recordToDelete) {
+      throw new NotFoundException('Record not found');
+    }
+
+    try {
+      return await this.prisma.newsUpdate.delete({ where: { id } });
+    } catch (error) {
+      throw prismaError(error);
+    }
   }
 }
