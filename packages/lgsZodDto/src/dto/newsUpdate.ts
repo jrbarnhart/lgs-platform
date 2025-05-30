@@ -24,7 +24,7 @@ export const updateNewsUpdateDto = newsUpdateEntity
   })
   .refine(
     (schema) => Object.keys(schema).length > 0,
-    "At least one property required for update"
+    "At least one valid property required for update"
   );
 
 export type NewsUpdateEntity = z.infer<typeof newsUpdateEntity>;

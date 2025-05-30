@@ -27,7 +27,7 @@ export const updateStoreEventDto = storeEventEntity
   })
   .refine(
     (schema) => Object.keys(schema).length > 0,
-    "At least one property required for update"
+    "At least one valid property required for update"
   );
 
 export type StoreEventDto = z.infer<typeof storeEventEntity>;
