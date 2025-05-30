@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { NewsUpdatesModule } from './news-updates/news-updates.module';
+import { StoreHoursModule } from './store-hours/store-hours.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), NewsUpdatesModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), NewsUpdatesModule, StoreHoursModule],
   controllers: [AppController],
   providers: [AppService],
 })

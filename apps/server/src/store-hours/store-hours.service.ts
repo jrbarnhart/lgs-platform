@@ -1,26 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateStoreHourDto, UpdateStoreHourDto } from 'lgs-zod-dto';
 import { PrismaService } from 'src/prisma.service';
-import { CreateNewsUpdateDto, UpdateNewsUpdateDto } from 'lgs-zod-dto';
 import prismaError from 'src/validation/prismaError';
 
 @Injectable()
-export class NewsUpdatesService {
+export class StoreHoursService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createNewsUpdateDto: CreateNewsUpdateDto) {
+  async create(createStoreHourDto: CreateStoreHourDto) {
     try {
-      return await this.prisma.newsUpdate.create({ data: createNewsUpdateDto });
+      return await this.prisma.storeHour.create({ data: createStoreHourDto });
     } catch (error) {
       prismaError(error);
     }
   }
 
   async findAll() {
-    return await this.prisma.newsUpdate.findMany();
+    return await this.prisma.storeHour.findMany();
   }
 
   async findOne(id: number) {
-    const foundRecord = await this.prisma.newsUpdate.findUnique({
+    const foundRecord = await this.prisma.storeHour.findUnique({
       where: { id },
     });
 
@@ -31,11 +31,11 @@ export class NewsUpdatesService {
     return foundRecord;
   }
 
-  async update(id: number, updateNewsUpdateDto: UpdateNewsUpdateDto) {
+  async update(id: number, updateStoreHourDto: UpdateStoreHourDto) {
     try {
-      return await this.prisma.newsUpdate.update({
+      return await this.prisma.storeHour.update({
         where: { id },
-        data: updateNewsUpdateDto,
+        data: updateStoreHourDto,
       });
     } catch (error) {
       prismaError(error);
@@ -44,7 +44,7 @@ export class NewsUpdatesService {
 
   async remove(id: number) {
     try {
-      return await this.prisma.newsUpdate.delete({ where: { id } });
+      return await this.prisma.storeHour.delete({ where: { id } });
     } catch (error) {
       prismaError(error);
     }
