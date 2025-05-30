@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./contexts/Auth/AuthContextProvider.tsx";
 import { EditingContextProvider } from "./contexts/Editing/EditingContextProvider.tsx";
 import { routeTree } from "./routeTree.gen.ts";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -16,6 +17,9 @@ declare module "@tanstack/react-router" {
   }
 }
 
+// React Query client
+const queryClient = new QueryClient();
+
 const rootElement = document.getElementById("root") as Element;
 if (!rootElement.innerHTML) {
   const root = ReactDom.createRoot(rootElement);
@@ -23,7 +27,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <AuthContextProvider>
         <EditingContextProvider>
-          <RouterProvider router={router} />
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
         </EditingContextProvider>
       </AuthContextProvider>
     </StrictMode>
