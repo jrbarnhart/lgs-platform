@@ -1,5 +1,5 @@
 {
-  "name": "zod-dto",
+  "name": "lgs-zod-dto",
   "version": "0.1.0",
   "description": "Shared Zod schemas and inferred types used as DTO's for web and server.",
   "main": "dist/index.js",
