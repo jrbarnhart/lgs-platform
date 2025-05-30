@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zDayInt, zId, zString64 } from "./sharedSchemas";
 
-export const storeHourEntity = z.object({
+export const storeHourEntitySchema = z.object({
   id: zId,
   dayOfWeek: zDayInt,
   openTime: zString64.optional(),
@@ -11,13 +11,13 @@ export const storeHourEntity = z.object({
   updatedAt: z.date(),
 });
 
-export const createStoreHourDto = storeHourEntity.omit({
+export const createStoreHourDtoSchema = storeHourEntitySchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
 });
 
-export const updateStoreHourDto = storeHourEntity
+export const updateStoreHourDtoSchema = storeHourEntitySchema
   .omit({ id: true, createdAt: true, updatedAt: true })
   .partial({
     dayOfWeek: true,
@@ -27,6 +27,6 @@ export const updateStoreHourDto = storeHourEntity
     "At least one valid property required for update"
   );
 
-export type StoreHourEntity = z.infer<typeof storeHourEntity>;
-export type CreateStoreHourDto = z.infer<typeof createStoreHourDto>;
-export type UpdateStoreHourDto = z.infer<typeof updateStoreHourDto>;
+export type StoreHourEntity = z.infer<typeof storeHourEntitySchema>;
+export type CreateStoreHourDto = z.infer<typeof createStoreHourDtoSchema>;
+export type UpdateStoreHourDto = z.infer<typeof updateStoreHourDtoSchema>;

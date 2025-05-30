@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zId, zString128 } from "./sharedSchemas";
 
-export const storeEventEntity = z.object({
+export const storeEventEntitySchema = z.object({
   id: zId,
   title: zString128,
   description: z.string().trim().optional(),
@@ -12,13 +12,13 @@ export const storeEventEntity = z.object({
   updatedAt: z.date(),
 });
 
-export const createStoreEventDto = storeEventEntity.omit({
+export const createStoreEventDtoSchema = storeEventEntitySchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
 });
 
-export const updateStoreEventDto = storeEventEntity
+export const updateStoreEventDtoSchema = storeEventEntitySchema
   .omit({ id: true, createdAt: true, updatedAt: true })
   .partial({
     title: true,
@@ -30,6 +30,6 @@ export const updateStoreEventDto = storeEventEntity
     "At least one valid property required for update"
   );
 
-export type StoreEventDto = z.infer<typeof storeEventEntity>;
-export type CreateStoreEventDto = z.infer<typeof createStoreEventDto>;
-export type UpdateStoreEventDto = z.infer<typeof updateStoreEventDto>;
+export type StoreEventDto = z.infer<typeof storeEventEntitySchema>;
+export type CreateStoreEventDto = z.infer<typeof createStoreEventDtoSchema>;
+export type UpdateStoreEventDto = z.infer<typeof updateStoreEventDtoSchema>;

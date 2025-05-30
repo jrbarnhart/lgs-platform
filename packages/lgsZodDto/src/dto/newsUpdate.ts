@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zId, zString128 } from "./sharedSchemas";
 
-export const newsUpdateEntity = z.object({
+export const newsUpdateEntitySchema = z.object({
   id: zId,
   title: zString128,
   content: z.string().trim().min(1, "Must not be empty"),
@@ -10,13 +10,13 @@ export const newsUpdateEntity = z.object({
   updatedAt: z.date(),
 });
 
-export const createNewsUpdateDto = newsUpdateEntity.omit({
+export const createNewsUpdateDtoSchema = newsUpdateEntitySchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
 });
 
-export const updateNewsUpdateDto = newsUpdateEntity
+export const updateNewsUpdateDtoSchema = newsUpdateEntitySchema
   .omit({ id: true, createdAt: true, updatedAt: true })
   .partial({
     title: true,
@@ -27,6 +27,6 @@ export const updateNewsUpdateDto = newsUpdateEntity
     "At least one valid property required for update"
   );
 
-export type NewsUpdateEntity = z.infer<typeof newsUpdateEntity>;
-export type CreateNewsUpdateDto = z.infer<typeof createNewsUpdateDto>;
-export type UpdateNewsUpdateDto = z.infer<typeof updateNewsUpdateDto>;
+export type NewsUpdateEntity = z.infer<typeof newsUpdateEntitySchema>;
+export type CreateNewsUpdateDto = z.infer<typeof createNewsUpdateDtoSchema>;
+export type UpdateNewsUpdateDto = z.infer<typeof updateNewsUpdateDtoSchema>;
