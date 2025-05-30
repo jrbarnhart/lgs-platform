@@ -21,7 +21,11 @@ export const updateNewsUpdateDto = newsUpdateEntity
   .partial({
     title: true,
     content: true,
-  });
+  })
+  .refine(
+    (schema) => Object.keys(schema).length > 0,
+    "At least one property required for update"
+  );
 
 export type NewsUpdateEntity = z.infer<typeof newsUpdateEntity>;
 export type CreateNewsUpdateDto = z.infer<typeof createNewsUpdateDto>;

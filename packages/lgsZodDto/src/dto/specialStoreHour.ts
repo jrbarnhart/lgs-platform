@@ -25,7 +25,11 @@ export const updateSpecialStoreHourDto = specialStoreHourEntity
     createdAt: true,
     updatedAt: true,
   })
-  .partial({ date: true, dayOfWeek: true });
+  .partial({ date: true, dayOfWeek: true })
+  .refine(
+    (schema) => Object.keys(schema).length > 0,
+    "At least one property required for update"
+  );
 
 export type SpecialStoreHourEntity = z.infer<typeof specialStoreHourEntity>;
 export type CreateSpecialStoreHourDto = z.infer<

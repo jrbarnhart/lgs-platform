@@ -21,7 +21,11 @@ export const updateStoreHourDto = storeHourEntity
   .omit({ id: true, createdAt: true, updatedAt: true })
   .partial({
     dayOfWeek: true,
-  });
+  })
+  .refine(
+    (schema) => Object.keys(schema).length > 0,
+    "At least one property required for update"
+  );
 
 export type StoreHourEntity = z.infer<typeof storeHourEntity>;
 export type CreateStoreHourDto = z.infer<typeof createStoreHourDto>;

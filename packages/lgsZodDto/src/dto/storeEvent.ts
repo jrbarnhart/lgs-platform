@@ -24,7 +24,11 @@ export const updateStoreEventDto = storeEventEntity
     title: true,
     startDate: true,
     endDate: true,
-  });
+  })
+  .refine(
+    (schema) => Object.keys(schema).length > 0,
+    "At least one property required for update"
+  );
 
 export type StoreEventDto = z.infer<typeof storeEventEntity>;
 export type CreateStoreEventDto = z.infer<typeof createStoreEventDto>;
