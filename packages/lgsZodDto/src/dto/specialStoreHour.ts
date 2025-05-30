@@ -5,7 +5,6 @@ export const specialStoreHourEntity = z.object({
   id: zId,
   date: z.date(),
   description: zString64.optional(),
-  dayOfWeek: zDayInt,
   openTime: zString64.optional(),
   closeTime: zString64.optional(),
   isClosed: z.boolean().optional(),
@@ -25,7 +24,7 @@ export const updateSpecialStoreHourDto = specialStoreHourEntity
     createdAt: true,
     updatedAt: true,
   })
-  .partial({ date: true, dayOfWeek: true })
+  .partial({ date: true })
   .refine(
     (schema) => Object.keys(schema).length > 0,
     "At least one valid property required for update"
