@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateNewsUpdateDto } from './dto/create-news-update.dto';
-import { UpdateNewsUpdateDto } from './dto/update-news-update.dto';
 import { PrismaService } from 'src/prisma.service';
+import { CreateNewsUpdateDto, UpdateNewsUpdateDto } from 'lgs-zod-dto';
 
 @Injectable()
 export class NewsUpdatesService {
