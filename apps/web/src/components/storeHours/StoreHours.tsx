@@ -1,16 +1,65 @@
+import type { StoreHourEntity } from "lgs-zod-dto";
 import { useAuthContext } from "../../contexts/Auth/useAuthContext";
 import Editable from "../editable/Editable";
 
-type StoreHoursProps = React.HtmlHTMLAttributes<HTMLDivElement>;
+type StoreHoursProps = {
+  data: StoreHourEntity[];
+} & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function StoreHours(props: StoreHoursProps) {
   const { loggedIn } = useAuthContext();
+  const { data, ...rest } = props;
+
+  const weekdayFromInt = (dayOfWeek: number) => {
+    let dayString = "Invalid Weekday Data";
+    switch (dayOfWeek) {
+      case 0: {
+        dayString = "Sunday";
+        break;
+      }
+      case 1: {
+        dayString = "Monday";
+        break;
+      }
+      case 2: {
+        dayString = "Tuesday";
+        break;
+      }
+      case 3: {
+        dayString = "Wednesday";
+        break;
+      }
+      case 4: {
+        dayString = "Thursday";
+        break;
+      }
+      case 5: {
+        dayString = "Friday";
+        break;
+      }
+      case 6: {
+        dayString = "Saturday";
+        break;
+      }
+    }
+    return dayString;
+  };
+
   return (
-    <Editable loggedIn={loggedIn} section="hours" {...props}>
+    <Editable loggedIn={loggedIn} section="hours" {...rest}>
       <h2>Hours:</h2>
-      <p>M-F - 10am to Midnight</p>
-      <p>Sat - Noon - 2am</p>
-      <p>Sun - Closed</p>
+      {data.length > 0 ? (
+        data.map((storeHour) => (
+          <p key={`store-hour:${storeHour.id.toString()}`}>
+            <span>{weekdayFromInt(storeHour.dayOfWeek)} - </span>
+            {storeHour.isClosed || !(storeHour.openTime && storeHour.closeTime)
+              ? "Closed"
+              : `${storeHour.openTime} to ${storeHour.closeTime}`}
+          </p>
+        ))
+      ) : (
+        <p>No hours listed.</p>
+      )}
     </Editable>
   );
 }
