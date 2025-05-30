@@ -1,16 +1,31 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
+import ReactDom from "react-dom/client";
 import { AuthContextProvider } from "./contexts/Auth/AuthContextProvider.tsx";
 import { EditingContextProvider } from "./contexts/Editing/EditingContextProvider.tsx";
+import { routeTree } from "./routeTree.gen.ts";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 
-createRoot(document.getElementById("root") as Element).render(
-  <StrictMode>
-    <AuthContextProvider>
-      <EditingContextProvider>
-        <App />
-      </EditingContextProvider>
-    </AuthContextProvider>
-  </StrictMode>
-);
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+const rootElement = document.getElementById("root") as Element;
+if (!rootElement.innerHTML) {
+  const root = ReactDom.createRoot(rootElement);
+  root.render(
+    <StrictMode>
+      <AuthContextProvider>
+        <EditingContextProvider>
+          <RouterProvider router={router} />
+        </EditingContextProvider>
+      </AuthContextProvider>
+    </StrictMode>
+  );
+}
