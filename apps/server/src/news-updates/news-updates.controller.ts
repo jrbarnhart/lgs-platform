@@ -11,9 +11,9 @@ import {
 import { NewsUpdatesService } from './news-updates.service';
 import {
   CreateNewsUpdateDto,
+  createNewsUpdateDtoSchema,
   UpdateNewsUpdateDto,
-  createNewsUpdateDto,
-  updateNewsUpdateDto,
+  updateNewsUpdateDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
 
@@ -22,7 +22,7 @@ export class NewsUpdatesController {
   constructor(private readonly newsUpdatesService: NewsUpdatesService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createNewsUpdateDto))
+  @UsePipes(new ZodValidationPipe(createNewsUpdateDtoSchema))
   create(@Body() createNewsUpdateDto: CreateNewsUpdateDto) {
     return this.newsUpdatesService.create(createNewsUpdateDto);
   }
@@ -40,7 +40,7 @@ export class NewsUpdatesController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body(new ZodValidationPipe(updateNewsUpdateDto))
+    @Body(new ZodValidationPipe(updateNewsUpdateDtoSchema))
     updateNewsUpdateDto: UpdateNewsUpdateDto,
   ) {
     return this.newsUpdatesService.update(+id, updateNewsUpdateDto);

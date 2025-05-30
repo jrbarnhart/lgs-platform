@@ -11,9 +11,9 @@ import {
 import { StoreHoursService } from './store-hours.service';
 import {
   CreateStoreHourDto,
+  createStoreHourDtoSchema,
   UpdateStoreHourDto,
-  createStoreHourDto,
-  updateStoreHourDto,
+  updateStoreHourDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
 
@@ -22,7 +22,7 @@ export class StoreHoursController {
   constructor(private readonly storeHoursService: StoreHoursService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createStoreHourDto))
+  @UsePipes(new ZodValidationPipe(createStoreHourDtoSchema))
   create(@Body() createStoreHourDto: CreateStoreHourDto) {
     return this.storeHoursService.create(createStoreHourDto);
   }
@@ -40,7 +40,7 @@ export class StoreHoursController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body(new ZodValidationPipe(updateStoreHourDto))
+    @Body(new ZodValidationPipe(updateStoreHourDtoSchema))
     updateStoreHourDto: UpdateStoreHourDto,
   ) {
     return this.storeHoursService.update(+id, updateStoreHourDto);

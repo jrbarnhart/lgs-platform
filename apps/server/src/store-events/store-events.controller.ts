@@ -11,9 +11,9 @@ import {
 import { StoreEventsService } from './store-events.service';
 import {
   CreateStoreEventDto,
+  createStoreEventDtoSchema,
   UpdateStoreEventDto,
-  createStoreEventDto,
-  updateStoreEventDto,
+  updateStoreEventDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
 
@@ -22,7 +22,7 @@ export class StoreEventsController {
   constructor(private readonly storeEventsService: StoreEventsService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createStoreEventDto))
+  @UsePipes(new ZodValidationPipe(createStoreEventDtoSchema))
   create(@Body() createStoreEventDto: CreateStoreEventDto) {
     return this.storeEventsService.create(createStoreEventDto);
   }
@@ -40,7 +40,7 @@ export class StoreEventsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body(new ZodValidationPipe(updateStoreEventDto))
+    @Body(new ZodValidationPipe(updateStoreEventDtoSchema))
     updateStoreEventDto: UpdateStoreEventDto,
   ) {
     return this.storeEventsService.update(+id, updateStoreEventDto);
