@@ -10,29 +10,12 @@ export const Route = createFileRoute("/")({
 });
 
 function RouteComponent() {
-  const { loggedIn, setLoggedIn } = useAuthContext();
-
-  const handleLoginButton = () => {
-    setLoggedIn((prev) => !prev);
-  };
-
-  const handleCommitButton = () => {
-    window.location.reload();
-  };
+  const { loggedIn } = useAuthContext();
 
   return (
     <div>
       <h1>Local Game Store</h1>
-      <nav>
-        <button type="button" onClick={handleLoginButton}>
-          {loggedIn ? "Logout" : "Login"}
-        </button>
-        {loggedIn && (
-          <button type="button" onClick={handleCommitButton}>
-            Commit Changes
-          </button>
-        )}
-      </nav>
+
       <main>
         <StoreHours loggedIn={loggedIn} />
         <News loggedIn={loggedIn} />
