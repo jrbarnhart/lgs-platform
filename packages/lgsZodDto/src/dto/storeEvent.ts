@@ -30,6 +30,6 @@ export const updateStoreEventDtoSchema = storeEventEntitySchema
     "At least one valid property required for update"
   );
 
-export type StoreEventDto = z.infer<typeof storeEventEntitySchema>;
+export type StoreEventEntity = z.infer<typeof storeEventEntitySchema>;
 export type CreateStoreEventDto = z.infer<typeof createStoreEventDtoSchema>;
 export type UpdateStoreEventDto = z.infer<typeof updateStoreEventDtoSchema>;
