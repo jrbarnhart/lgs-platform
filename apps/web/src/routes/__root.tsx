@@ -1,11 +1,16 @@
 import * as React from "react";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useAuthContext } from "../contexts/Auth/useAuthContext";
+import type { QueryClient } from "@tanstack/react-query";
 
-export const Route = createRootRoute({
-  component: RootComponent,
-});
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  { component: RootComponent }
+);
 
 function RootComponent() {
   const { loggedIn, setLoggedIn } = useAuthContext();
