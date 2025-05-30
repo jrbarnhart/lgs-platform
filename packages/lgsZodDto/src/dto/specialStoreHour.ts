@@ -3,7 +3,7 @@ import { zDayInt, zId, zString64 } from "./sharedSchemas";
 
 export const specialStoreHourEntity = z.object({
   id: zId,
-  date: z.date(),
+  date: z.coerce.date(),
   description: zString64.optional(),
   openTime: zString64.optional(),
   closeTime: zString64.optional(),
