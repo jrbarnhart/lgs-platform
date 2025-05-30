@@ -1,0 +1,55 @@
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+} from '@nestjs/common';
+import { SpecialStoreHoursService } from './special-store-hours.service';
+import {
+  CreateSpecialStoreHourDto,
+  UpdateSpecialStoreHourDto,
+  createSpecialStoreHourDto,
+  updateSpecialStoreHourDto,
+} from 'lgs-zod-dto';
+import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
+
+@Controller('special-store-hours')
+export class SpecialStoreHoursController {
+  constructor(
+    private readonly specialStoreHoursService: SpecialStoreHoursService,
+  ) {}
+
+  @Post()
+  @UsePipes(new ZodValidationPipe(createSpecialStoreHourDto))
+  create(@Body() createSpecialStoreHourDto: CreateSpecialStoreHourDto) {
+    return this.specialStoreHoursService.create(createSpecialStoreHourDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.specialStoreHoursService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.specialStoreHoursService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(updateSpecialStoreHourDto))
+    updateSpecialStoreHourDto: UpdateSpecialStoreHourDto,
+  ) {
+    return this.specialStoreHoursService.update(+id, updateSpecialStoreHourDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.specialStoreHoursService.remove(+id);
+  }
+}
