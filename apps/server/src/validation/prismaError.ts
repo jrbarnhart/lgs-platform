@@ -1,13 +1,40 @@
-import { BadRequestException } from '@nestjs/common';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import {
+  BadRequestException,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientValidationError,
+} from 'generated/prisma/runtime/library';
 
-export default function prismaError(error: unknown): BadRequestException {
-  // Handle specific Prisma error for unique constraints
+export default function prismaError(error: unknown): never {
   if (error instanceof PrismaClientKnownRequestError) {
-    return new BadRequestException('Validation failed', error.message);
+    switch (error.code) {
+      case 'P2002': // Unique constraint violation
+        throw new ConflictException('A record with this value already exists');
+
+      case 'P2025': // Record not found
+        throw new NotFoundException('Record not found');
+
+      case 'P2003': // Foreign key constraint violation
+        throw new BadRequestException('Referenced record does not exist');
+
+      case 'P2014': // Required relation violation
+        throw new BadRequestException(
+          'Cannot delete record due to related data',
+        );
+
+      default:
+        console.log('Unhandled Prisma error:', error.code, error.message);
+        throw new BadRequestException('Database operation failed');
+    }
   }
 
-  // For any other error that we didn't explicitly handle
-  console.log(error);
-  return new BadRequestException('An unknown error occured');
+  if (error instanceof PrismaClientValidationError) {
+    throw new BadRequestException('Invalid data provided');
+  }
+
+  // Unexpected errors
+  throw new BadRequestException('An unknown error occurred');
 }
