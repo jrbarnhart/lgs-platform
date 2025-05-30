@@ -1,7 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { NewsUpdatesService } from './news-updates.service';
-import { CreateNewsUpdateDto } from './dto/create-news-update.dto';
-import { UpdateNewsUpdateDto } from './dto/update-news-update.dto';
+import { CreateNewsUpdateDto, UpdateNewsUpdateDto } from 'lgs-zod-dto';
 
 @Controller('news-updates')
 export class NewsUpdatesController {
@@ -23,7 +30,10 @@ export class NewsUpdatesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewsUpdateDto: UpdateNewsUpdateDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateNewsUpdateDto: UpdateNewsUpdateDto,
+  ) {
     return this.newsUpdatesService.update(+id, updateNewsUpdateDto);
   }
 
