@@ -13,6 +13,7 @@ import {
   CreateNewsUpdateDto,
   UpdateNewsUpdateDto,
   createNewsUpdateDto,
+  updateNewsUpdateDto,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/zodValidation.pipe';
 
@@ -39,7 +40,8 @@ export class NewsUpdatesController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateNewsUpdateDto: UpdateNewsUpdateDto,
+    @Body(new ZodValidationPipe(updateNewsUpdateDto))
+    updateNewsUpdateDto: UpdateNewsUpdateDto,
   ) {
     return this.newsUpdatesService.update(+id, updateNewsUpdateDto);
   }
