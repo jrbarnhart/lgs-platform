@@ -8,11 +8,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { newsUpdatesQueryOptions } from "../queries/newsUpdates/newsUpdatesQueryOptions";
 
 export const Route = createFileRoute("/")({
-  loader: ({ context: { queryClient } }) => {
-    return {
-      storeHoursQuery: queryClient.ensureQueryData(storeHoursQueryOptions()),
-      newsUpdatesQuery: queryClient.ensureQueryData(newsUpdatesQueryOptions()),
-    };
+  loader: async ({ context: { queryClient } }) => {
+    await queryClient.ensureQueryData(storeHoursQueryOptions());
+    await queryClient.ensureQueryData(newsUpdatesQueryOptions());
   },
   component: RouteComponent,
 });
