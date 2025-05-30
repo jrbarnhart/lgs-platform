@@ -6,15 +6,22 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
 } from '@nestjs/common';
 import { NewsUpdatesService } from './news-updates.service';
-import { CreateNewsUpdateDto, UpdateNewsUpdateDto } from 'lgs-zod-dto';
+import {
+  CreateNewsUpdateDto,
+  UpdateNewsUpdateDto,
+  createNewsUpdateDto,
+} from 'lgs-zod-dto';
+import { ZodValidationPipe } from 'src/zodValidation.pipe';
 
 @Controller('news-updates')
 export class NewsUpdatesController {
   constructor(private readonly newsUpdatesService: NewsUpdatesService) {}
 
   @Post()
+  @UsePipes(new ZodValidationPipe(createNewsUpdateDto))
   create(@Body() createNewsUpdateDto: CreateNewsUpdateDto) {
     return this.newsUpdatesService.create(createNewsUpdateDto);
   }
