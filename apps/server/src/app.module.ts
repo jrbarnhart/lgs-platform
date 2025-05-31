@@ -6,9 +6,10 @@ import { NewsUpdatesModule } from './news-updates/news-updates.module';
 import { StoreHoursModule } from './store-hours/store-hours.module';
 import { SpecialStoreHoursModule } from './special-store-hours/special-store-hours.module';
 import { StoreEventsModule } from './store-events/store-events.module';
+import { OffersModule } from './offers/offers.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), NewsUpdatesModule, StoreHoursModule, SpecialStoreHoursModule, StoreEventsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), NewsUpdatesModule, StoreHoursModule, SpecialStoreHoursModule, StoreEventsModule, OffersModule],
   controllers: [AppController],
   providers: [AppService],
 })
