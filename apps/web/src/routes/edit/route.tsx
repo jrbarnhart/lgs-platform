@@ -12,7 +12,6 @@ export const Route = createFileRoute("/edit")({
 function RouteComponent() {
   return (
     <div>
-      <p>Hello "/edit"!</p>
       <Outlet />
     </div>
   );
