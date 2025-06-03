@@ -1,6 +1,11 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/edit")({
+  beforeLoad: ({ context }) => {
+    if (!context.auth?.loggedIn) {
+      redirect({ to: "/", throw: true });
+    }
+  },
   component: RouteComponent,
 });
 
