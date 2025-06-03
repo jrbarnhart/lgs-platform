@@ -11,7 +11,7 @@ export const Route = createFileRoute("/edit")({
 
 function RouteComponent() {
   return (
-    <div className="grow flex flex-col">
+    <div className="grow flex flex-col overflow-hidden">
       <Outlet />
     </div>
   );
