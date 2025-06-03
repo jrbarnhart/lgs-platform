@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/contexts/Auth/useAuthContext";
 import { Button } from "../ui/button";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Menubar,
   MenubarContent,
@@ -13,7 +13,7 @@ export default function Navigation() {
   const { loggedIn, setLoggedIn } = useAuthContext();
 
   const handleLoginButton = () => {
-    setLoggedIn((prev) => !prev);
+    setLoggedIn(true);
   };
 
   return (
@@ -30,16 +30,29 @@ export default function Navigation() {
         onClick={handleLoginButton}
         className="cursor-pointer"
       >
-        {loggedIn ? "Logout" : "Login"}
+        Log In
       </Button>
     </nav>
   );
 }
 
 const AdminNavigation = () => {
+  const { setLoggedIn } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogoutButton = () => {
+    setLoggedIn(false);
+    void navigate({ to: "/" });
+  };
+
   return (
     <Menubar>
-      <p className="text-sm">Admin:</p>
+      <MenubarMenu>
+        <MenubarTrigger>Admin</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem onClick={handleLogoutButton}>Logout</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>Edit</MenubarTrigger>
         <MenubarContent>
