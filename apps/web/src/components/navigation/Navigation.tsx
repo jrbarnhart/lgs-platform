@@ -9,10 +9,6 @@ export default function Navigation() {
     setLoggedIn((prev) => !prev);
   };
 
-  const handleCommitButton = () => {
-    window.location.reload();
-  };
-
   return (
     <nav>
       <Button variant="link" asChild>
@@ -28,11 +24,6 @@ export default function Navigation() {
       >
         {loggedIn ? "Logout" : "Login"}
       </Button>
-      {loggedIn && (
-        <Button onClick={handleCommitButton} className="cursor-pointer">
-          Commit Changes
-        </Button>
-      )}
     </nav>
   );
 }
