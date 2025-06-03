@@ -1,17 +1,14 @@
 import type { OfferEntity } from "lgs-zod-dto";
-import { useAuthContext } from "../../contexts/Auth/useAuthContext";
-import Editable from "../editable/Editable";
 
 type SpecialsProps = {
   data: OfferEntity[];
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function Specials(props: SpecialsProps) {
-  const { loggedIn } = useAuthContext();
   const { data, ...rest } = props;
 
   return (
-    <Editable loggedIn={loggedIn} section="specials" {...rest}>
+    <div {...rest}>
       <h2>Specials:</h2>
       {data.length > 0 ? (
         data.map((offer) => (
@@ -23,6 +20,6 @@ export default function Specials(props: SpecialsProps) {
       ) : (
         <p>Nothing here right now. Check back soon for new offers!</p>
       )}
-    </Editable>
+    </div>
   );
 }

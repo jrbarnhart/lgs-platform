@@ -1,13 +1,10 @@
 import type { StoreHourEntity } from "lgs-zod-dto";
-import { useAuthContext } from "../../contexts/Auth/useAuthContext";
-import Editable from "../editable/Editable";
 
 type StoreHoursProps = {
   data: StoreHourEntity[];
 } & React.HtmlHTMLAttributes<HTMLDivElement>;
 
 export default function StoreHours(props: StoreHoursProps) {
-  const { loggedIn } = useAuthContext();
   const { data, ...rest } = props;
 
   const weekdayFromInt = (dayOfWeek: number) => {
@@ -46,7 +43,7 @@ export default function StoreHours(props: StoreHoursProps) {
   };
 
   return (
-    <Editable loggedIn={loggedIn} section="hours" {...rest}>
+    <div {...rest}>
       <h2>Hours:</h2>
       {data.length > 0 ? (
         data.map((storeHour) => (
@@ -60,6 +57,6 @@ export default function StoreHours(props: StoreHoursProps) {
       ) : (
         <p>No hours listed.</p>
       )}
-    </Editable>
+    </div>
   );
 }
