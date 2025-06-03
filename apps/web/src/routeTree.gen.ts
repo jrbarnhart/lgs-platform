@@ -12,7 +12,13 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as EventsImport } from './routes/events'
+import { Route as EditRouteImport } from './routes/edit/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as EditIndexImport } from './routes/edit/index'
+import { Route as EditSpecialsImport } from './routes/edit/specials'
+import { Route as EditNewsImport } from './routes/edit/news'
+import { Route as EditHoursImport } from './routes/edit/hours'
+import { Route as EditEventsImport } from './routes/edit/events'
 
 // Create/Update Routes
 
@@ -22,10 +28,46 @@ const EventsRoute = EventsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const EditRouteRoute = EditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const EditIndexRoute = EditIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditRouteRoute,
+} as any)
+
+const EditSpecialsRoute = EditSpecialsImport.update({
+  id: '/specials',
+  path: '/specials',
+  getParentRoute: () => EditRouteRoute,
+} as any)
+
+const EditNewsRoute = EditNewsImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => EditRouteRoute,
+} as any)
+
+const EditHoursRoute = EditHoursImport.update({
+  id: '/hours',
+  path: '/hours',
+  getParentRoute: () => EditRouteRoute,
+} as any)
+
+const EditEventsRoute = EditEventsImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => EditRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -39,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/edit': {
+      id: '/edit'
+      path: '/edit'
+      fullPath: '/edit'
+      preLoaderRoute: typeof EditRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/events': {
       id: '/events'
       path: '/events'
@@ -46,43 +95,141 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsImport
       parentRoute: typeof rootRoute
     }
+    '/edit/events': {
+      id: '/edit/events'
+      path: '/events'
+      fullPath: '/edit/events'
+      preLoaderRoute: typeof EditEventsImport
+      parentRoute: typeof EditRouteImport
+    }
+    '/edit/hours': {
+      id: '/edit/hours'
+      path: '/hours'
+      fullPath: '/edit/hours'
+      preLoaderRoute: typeof EditHoursImport
+      parentRoute: typeof EditRouteImport
+    }
+    '/edit/news': {
+      id: '/edit/news'
+      path: '/news'
+      fullPath: '/edit/news'
+      preLoaderRoute: typeof EditNewsImport
+      parentRoute: typeof EditRouteImport
+    }
+    '/edit/specials': {
+      id: '/edit/specials'
+      path: '/specials'
+      fullPath: '/edit/specials'
+      preLoaderRoute: typeof EditSpecialsImport
+      parentRoute: typeof EditRouteImport
+    }
+    '/edit/': {
+      id: '/edit/'
+      path: '/'
+      fullPath: '/edit/'
+      preLoaderRoute: typeof EditIndexImport
+      parentRoute: typeof EditRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface EditRouteRouteChildren {
+  EditEventsRoute: typeof EditEventsRoute
+  EditHoursRoute: typeof EditHoursRoute
+  EditNewsRoute: typeof EditNewsRoute
+  EditSpecialsRoute: typeof EditSpecialsRoute
+  EditIndexRoute: typeof EditIndexRoute
+}
+
+const EditRouteRouteChildren: EditRouteRouteChildren = {
+  EditEventsRoute: EditEventsRoute,
+  EditHoursRoute: EditHoursRoute,
+  EditNewsRoute: EditNewsRoute,
+  EditSpecialsRoute: EditSpecialsRoute,
+  EditIndexRoute: EditIndexRoute,
+}
+
+const EditRouteRouteWithChildren = EditRouteRoute._addFileChildren(
+  EditRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/edit': typeof EditRouteRouteWithChildren
   '/events': typeof EventsRoute
+  '/edit/events': typeof EditEventsRoute
+  '/edit/hours': typeof EditHoursRoute
+  '/edit/news': typeof EditNewsRoute
+  '/edit/specials': typeof EditSpecialsRoute
+  '/edit/': typeof EditIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/events': typeof EventsRoute
+  '/edit/events': typeof EditEventsRoute
+  '/edit/hours': typeof EditHoursRoute
+  '/edit/news': typeof EditNewsRoute
+  '/edit/specials': typeof EditSpecialsRoute
+  '/edit': typeof EditIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/edit': typeof EditRouteRouteWithChildren
   '/events': typeof EventsRoute
+  '/edit/events': typeof EditEventsRoute
+  '/edit/hours': typeof EditHoursRoute
+  '/edit/news': typeof EditNewsRoute
+  '/edit/specials': typeof EditSpecialsRoute
+  '/edit/': typeof EditIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/events'
+  fullPaths:
+    | '/'
+    | '/edit'
+    | '/events'
+    | '/edit/events'
+    | '/edit/hours'
+    | '/edit/news'
+    | '/edit/specials'
+    | '/edit/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/events'
-  id: '__root__' | '/' | '/events'
+  to:
+    | '/'
+    | '/events'
+    | '/edit/events'
+    | '/edit/hours'
+    | '/edit/news'
+    | '/edit/specials'
+    | '/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/edit'
+    | '/events'
+    | '/edit/events'
+    | '/edit/hours'
+    | '/edit/news'
+    | '/edit/specials'
+    | '/edit/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EditRouteRoute: typeof EditRouteRouteWithChildren
   EventsRoute: typeof EventsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EditRouteRoute: EditRouteRouteWithChildren,
   EventsRoute: EventsRoute,
 }
 
@@ -97,14 +244,45 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/edit",
         "/events"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/edit": {
+      "filePath": "edit/route.tsx",
+      "children": [
+        "/edit/events",
+        "/edit/hours",
+        "/edit/news",
+        "/edit/specials",
+        "/edit/"
+      ]
+    },
     "/events": {
       "filePath": "events.tsx"
+    },
+    "/edit/events": {
+      "filePath": "edit/events.tsx",
+      "parent": "/edit"
+    },
+    "/edit/hours": {
+      "filePath": "edit/hours.tsx",
+      "parent": "/edit"
+    },
+    "/edit/news": {
+      "filePath": "edit/news.tsx",
+      "parent": "/edit"
+    },
+    "/edit/specials": {
+      "filePath": "edit/specials.tsx",
+      "parent": "/edit"
+    },
+    "/edit/": {
+      "filePath": "edit/index.tsx",
+      "parent": "/edit"
     }
   }
 }
