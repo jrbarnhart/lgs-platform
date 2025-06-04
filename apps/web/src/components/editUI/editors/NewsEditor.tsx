@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { NewsUpdateEntity } from "lgs-zod-dto";
 import { Calendar, CalendarCheck, Eye, EyeClosed, Hash } from "lucide-react";
@@ -156,10 +159,23 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
             formOpen && "translate-x-0"
           )}
         >
-          <form>
-            <Label>Title</Label>
-            <Label>Published</Label>
-            <Label>Content</Label>
+          <form className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="published">Published</Label>
+              <Switch id="published" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="title">Title</Label>
+              <Input id="title" className="bg-background" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="content">Content</Label>
+              <Textarea id="content" className="bg-background" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="content">Content</Label>
+              <Textarea id="content" className="bg-background" />
+            </div>
           </form>
           {selectedRecord && (
             <>
