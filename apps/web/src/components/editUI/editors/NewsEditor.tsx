@@ -166,22 +166,25 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
         {/* Form */}
         <aside
           className={cn(
-            "row-start-1 col-start-1 flex flex-col gap-10 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 rounded-2xl p-2",
+            "row-start-1 col-start-1 flex flex-col gap-10 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 border border-black shadow-md shadow-gray-400 rounded-2xl p-2",
             formOpen && "translate-x-0"
           )}
         >
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <Label htmlFor="published">Published</Label>
-              <Switch id="published" />
+              <Switch id="published" className="border border-black" />
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" className="bg-background" />
+              <Input id="title" className="bg-background border border-black" />
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor="content">Content</Label>
-              <Textarea id="content" className="bg-background" />
+              <Textarea
+                id="content"
+                className="bg-background border border-black"
+              />
             </div>
             <Button type="submit" className="mt-6">
               {selectedRecord ? "Update" : "Create"}
