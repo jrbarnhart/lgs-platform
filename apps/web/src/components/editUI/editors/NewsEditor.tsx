@@ -57,6 +57,12 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
 
   const handleCreateButton = () => {
     setFormOpen((prev) => !prev);
+    setSelectedRecord(null);
+  };
+
+  const handleRecordButton = (record: NewsUpdateEntity) => {
+    setSelectedRecord(record);
+    setFormOpen(true);
   };
 
   const getSortLabel = (sort: SortOption): string => {
@@ -86,7 +92,12 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2>News Editor</h2>
-        <Button onClick={handleCreateButton}>Create</Button>
+        <Button
+          onClick={handleCreateButton}
+          variant={formOpen ? "destructive" : "default"}
+        >
+          {formOpen ? "Cancel" : "Create"}
+        </Button>
       </div>
       {/* Container for record list and form sections */}
       <div className="grow grid">
@@ -135,7 +146,7 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
               >
                 <button
                   onClick={() => {
-                    setSelectedRecord(record);
+                    handleRecordButton(record);
                   }}
                   type="button"
                 >
@@ -155,7 +166,7 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
         {/* Form */}
         <aside
           className={cn(
-            "row-start-1 col-start-1 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 rounded-2xl p-2",
+            "row-start-1 col-start-1 flex flex-col gap-10 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 rounded-2xl p-2",
             formOpen && "translate-x-0"
           )}
         >
@@ -172,20 +183,20 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
               <Label htmlFor="content">Content</Label>
               <Textarea id="content" className="bg-background" />
             </div>
-            <div className="flex flex-col gap-1">
-              <Label htmlFor="content">Content</Label>
-              <Textarea id="content" className="bg-background" />
-            </div>
+            <Button type="submit" className="mt-6">
+              {selectedRecord ? "Update" : "Create"}
+            </Button>
           </form>
           {selectedRecord && (
-            <>
+            <div>
+              <p>Updating News Id# {selectedRecord.id}</p>
               <p className="text-sm font-medium">
                 Created: {selectedRecord.createdAt.toString()}
               </p>
               <p className="text-sm font-medium">
                 Updated: {selectedRecord.updatedAt.toString()}
               </p>
-            </>
+            </div>
           )}
         </aside>
       </div>
