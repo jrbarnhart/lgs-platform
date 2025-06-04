@@ -88,10 +88,10 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
   };
 
   return (
-    <div {...rest} className={cn(className, "grow flex flex-col gap-4 p-4")}>
+    <div {...rest} className={cn(className, "grow flex flex-col gap-1 p-4")}>
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2>News Editor</h2>
+      <div className="flex justify-between items-center pb-1.5">
+        <h2 className="font-semibold text-2xl">News Editor</h2>
         <Button
           onClick={handleCreateButton}
           variant={formOpen ? "destructive" : "default"}
@@ -104,9 +104,10 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
         {/* Record List */}
         <section className="row-start-1 col-start-1 flex flex-col gap-4">
           {/* Record Sort Filters */}
-          <div className="flex flex-col gap-2 mt-1">
-            <p className="text-sm text-muted-foreground">
-              Sort By: {getSortLabel(sort)}
+          <div className="flex flex-col gap-2 mt-2 bg-neutral-100 border border-black px-2 pt-1 pb-2">
+            <p className="text-sm font-medium">
+              <span className="text-muted-foreground">Sort By:</span>{" "}
+              {getSortLabel(sort)}
             </p>
             <div className="flex justify-between items-center">
               <SortButton
@@ -166,7 +167,7 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
         {/* Form */}
         <aside
           className={cn(
-            "row-start-1 col-start-1 flex flex-col gap-10 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 border border-black shadow-md shadow-gray-400 rounded-2xl p-2",
+            "row-start-1 col-start-1 flex flex-col gap-10 translate-x-[calc(100%_+_1rem)] transition-transform ease-in-out bg-neutral-300 border border-black shadow-md shadow-gray-400 rounded-md p-2",
             formOpen && "translate-x-0"
           )}
         >
