@@ -90,7 +90,7 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
         {/* Record List */}
         <section className="row-start-1 col-start-1 flex flex-col gap-4">
           {/* Record Sort Filters */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 mt-1">
             <p className="text-sm text-muted-foreground">
               Sort By: {getSortLabel(sort)}
             </p>
