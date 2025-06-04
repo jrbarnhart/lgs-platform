@@ -2,14 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import type { NewsUpdateEntity } from "lgs-zod-dto";
-import {
-  ArrowDown,
-  ArrowUp,
-  Calendar,
-  CalendarCheck,
-  Eye,
-  Hash,
-} from "lucide-react";
+import { Calendar, CalendarCheck, Eye, Hash } from "lucide-react";
 import { useState } from "react";
 
 type NewsEditorProps = {
@@ -51,7 +44,10 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
           {data.map((record) => (
             <div
               key={`news-update-${record.id.toString()}`}
-              className="grid grid-flow-col grid-cols-[1fr_min-content] items-center border border-black bg-neutral-200 rounded-sm drop-shadow-lg"
+              className={cn(
+                "grid grid-flow-col grid-cols-[1fr_min-content] items-center border border-black rounded-sm drop-shadow-lg",
+                record.published ? "bg-amber-100" : "bg-rose-100"
+              )}
             >
               <button
                 onClick={() => {
@@ -59,19 +55,15 @@ export default function NewsEditor({ ...props }: NewsEditorProps) {
                 }}
                 type="button"
               >
-                <div className="grid grid-flow-col items-baseline gap-3 px-2 py-4">
-                  <p className="whitespace-nowrap truncate">{record.title}</p>
-                  <p className="truncate text-sm">{record.content}</p>
+                <div className="grid grid-flow-col justify-start items-baseline gap-3 px-2 py-4">
+                  <p className="whitespace-nowrap truncate text-sm font-medium">
+                    {record.title}
+                  </p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {record.content}
+                  </p>
                 </div>
               </button>
-              <div className="flex gap-1 items-center justify-around h-full pr-2">
-                <Button>
-                  <ArrowUp />
-                </Button>
-                <Button>
-                  <ArrowDown />
-                </Button>
-              </div>
             </div>
           ))}
         </section>
