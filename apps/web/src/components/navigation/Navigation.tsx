@@ -11,12 +11,7 @@ import {
 import { useMenuContext } from "@/contexts/Menu/useMenuContext";
 
 export default function Navigation() {
-  const { setLoggedIn } = useAuthContext();
   const { open: menuOpen } = useMenuContext();
-
-  const handleLoginButton = () => {
-    setLoggedIn(true);
-  };
 
   return (
     <nav>
@@ -27,23 +22,24 @@ export default function Navigation() {
       <Button variant="link" asChild>
         <Link to="/events">Events</Link>
       </Button>
-      <Button
-        variant="link"
-        onClick={handleLoginButton}
-        className="cursor-pointer"
-      >
-        Log In
-      </Button>
     </nav>
   );
 }
 
 const AdminNavigation = () => {
-  const { setLoggedIn } = useAuthContext();
+  const { loggedIn, setLoggedIn } = useAuthContext();
+  const { setOpen: setMenuOpen } = useMenuContext();
+
   const navigate = useNavigate();
+
+  const handleLoginButton = () => {
+    setLoggedIn(true);
+    void navigate({ to: "/" });
+  };
 
   const handleLogoutButton = () => {
     setLoggedIn(false);
+    setMenuOpen(false);
     void navigate({ to: "/" });
   };
 
@@ -51,27 +47,35 @@ const AdminNavigation = () => {
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger>Admin</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem onClick={handleLogoutButton}>Logout</MenubarItem>
-        </MenubarContent>
+        {loggedIn ? (
+          <MenubarContent>
+            <MenubarItem onClick={handleLogoutButton}>Logout</MenubarItem>
+          </MenubarContent>
+        ) : (
+          <MenubarContent>
+            <MenubarItem onClick={handleLoginButton}>Login</MenubarItem>
+          </MenubarContent>
+        )}
       </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Edit</MenubarTrigger>
-        <MenubarContent>
-          <Link to="/edit/news">
-            <MenubarItem>News & Updates</MenubarItem>
-          </Link>
-          <Link to="/edit/hours">
-            <MenubarItem>Hours</MenubarItem>
-          </Link>
-          <Link to="/edit/events">
-            <MenubarItem>Events</MenubarItem>
-          </Link>
-          <Link to="/edit/specials">
-            <MenubarItem>Specials & Deals</MenubarItem>
-          </Link>
-        </MenubarContent>
-      </MenubarMenu>
+      {loggedIn && (
+        <MenubarMenu>
+          <MenubarTrigger>Edit</MenubarTrigger>
+          <MenubarContent>
+            <Link to="/edit/news">
+              <MenubarItem>News & Updates</MenubarItem>
+            </Link>
+            <Link to="/edit/hours">
+              <MenubarItem>Hours</MenubarItem>
+            </Link>
+            <Link to="/edit/events">
+              <MenubarItem>Events</MenubarItem>
+            </Link>
+            <Link to="/edit/specials">
+              <MenubarItem>Specials & Deals</MenubarItem>
+            </Link>
+          </MenubarContent>
+        </MenubarMenu>
+      )}
     </Menubar>
   );
 };
