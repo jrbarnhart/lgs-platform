@@ -6,7 +6,8 @@ export default function useKeyCommands() {
 
   const handleMenuToggleKey = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === " ") {
+      // On Ctrl + Enter
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
         setOpen((prev) => !prev);
       }
     },
