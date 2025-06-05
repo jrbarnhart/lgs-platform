@@ -8,6 +8,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAuthContext } from "./contexts/Auth/useAuthContext.ts";
+import { MenuContextProvider } from "./contexts/Menu/MenuContextProvider.tsx";
 
 // React Query client
 const queryClient = new QueryClient();
@@ -42,10 +43,12 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <AuthContextProvider>
         <EditingContextProvider>
-          <QueryClientProvider client={queryClient}>
-            <InnerApp />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
+          <MenuContextProvider>
+            <QueryClientProvider client={queryClient}>
+              <InnerApp />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </MenuContextProvider>
         </EditingContextProvider>
       </AuthContextProvider>
     </StrictMode>
