@@ -8,9 +8,11 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "../ui/menubar";
+import { useMenuContext } from "@/contexts/Menu/useMenuContext";
 
 export default function Navigation() {
-  const { loggedIn, setLoggedIn } = useAuthContext();
+  const { setLoggedIn } = useAuthContext();
+  const { open: menuOpen } = useMenuContext();
 
   const handleLoginButton = () => {
     setLoggedIn(true);
@@ -18,7 +20,7 @@ export default function Navigation() {
 
   return (
     <nav>
-      {loggedIn && <AdminNavigation />}
+      {menuOpen && <AdminNavigation />}
       <Button variant="link" asChild>
         <Link to="/">Home</Link>
       </Button>
