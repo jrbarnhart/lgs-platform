@@ -1,9 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { LoginDto } from 'lgs-zod-dto';
 
 @Injectable()
 export class AuthService {
-  async signIn({ username, password }: { username: string; password: string }) {
+  async signIn(loginDto: LoginDto) {
+    const { password, username } = loginDto;
     const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || 'notAHash';
     const passwordMatches = await bcrypt.compare(password, adminPasswordHash);
 
