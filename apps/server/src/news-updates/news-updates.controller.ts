@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { NewsUpdatesService } from './news-updates.service';
 import {
@@ -16,12 +17,14 @@ import {
   updateNewsUpdateDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('news-updates')
 export class NewsUpdatesController {
   constructor(private readonly newsUpdatesService: NewsUpdatesService) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @UsePipes(new ZodValidationPipe(createNewsUpdateDtoSchema))
   create(@Body() createNewsUpdateDto: CreateNewsUpdateDto) {
     return this.newsUpdatesService.create(createNewsUpdateDto);
@@ -38,6 +41,7 @@ export class NewsUpdatesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateNewsUpdateDtoSchema))
@@ -47,6 +51,7 @@ export class NewsUpdatesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.newsUpdatesService.remove(+id);
   }

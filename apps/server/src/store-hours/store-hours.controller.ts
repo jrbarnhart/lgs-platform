@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { StoreHoursService } from './store-hours.service';
 import {
@@ -16,12 +17,14 @@ import {
   updateStoreHourDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('store-hours')
 export class StoreHoursController {
   constructor(private readonly storeHoursService: StoreHoursService) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @UsePipes(new ZodValidationPipe(createStoreHourDtoSchema))
   create(@Body() createStoreHourDto: CreateStoreHourDto) {
     return this.storeHoursService.create(createStoreHourDto);
@@ -38,6 +41,7 @@ export class StoreHoursController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateStoreHourDtoSchema))
@@ -47,6 +51,7 @@ export class StoreHoursController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.storeHoursService.remove(+id);
   }

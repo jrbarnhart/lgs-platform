@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { StoreEventsService } from './store-events.service';
 import {
@@ -16,12 +17,14 @@ import {
   updateStoreEventDtoSchema,
 } from 'lgs-zod-dto';
 import { ZodValidationPipe } from 'src/validation/zodValidation.pipe';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('store-events')
 export class StoreEventsController {
   constructor(private readonly storeEventsService: StoreEventsService) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   @UsePipes(new ZodValidationPipe(createStoreEventDtoSchema))
   create(@Body() createStoreEventDto: CreateStoreEventDto) {
     return this.storeEventsService.create(createStoreEventDto);
@@ -38,6 +41,7 @@ export class StoreEventsController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body(new ZodValidationPipe(updateStoreEventDtoSchema))
@@ -47,6 +51,7 @@ export class StoreEventsController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {
     return this.storeEventsService.remove(+id);
   }
